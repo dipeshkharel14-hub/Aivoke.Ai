@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+/* Theme is set on <html data-theme="light|dark"> by the inline script in layout.tsx. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  color-scheme: light;
+  --bg: #f6f8fb;          /* cool grey-white */
+  --surface: #ffffff;
+  --surface-2: #eef2f7;
+  --border: #dce3ec;
+  --text: #0f1b2d;
+  --muted: #566277;       /* 5.9:1 on --bg */
+  --accent: #0047ab;      /* solid cobalt; 9:1 with white text */
+  --accent-hover: #003b90;
+  --accent-text: #0047ab;
+  --accent-soft: #e6eefb;
+  --on-accent: #ffffff;
+  --success: #0f7b4a;
+  --danger: #b42318;
+  --warning: #8a5a00;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0a1020;          /* navy */
+  --surface: #111a2e;
+  --surface-2: #17223a;
+  --border: #243250;
+  --text: #e8edf7;
+  --muted: #9aa6bd;       /* 6.9:1 on --bg */
+  --accent: #2f66db;      /* 5:1 with white text */
+  --accent-hover: #2558c7;
+  --accent-text: #7aa2f7;
+  --accent-soft: #14264d;
+  --on-accent: #ffffff;
+  --success: #4ade9a;
+  --danger: #f97066;
+  --warning: #f5b84a;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-text: var(--accent-text);
+  --color-accent-soft: var(--accent-soft);
+  --color-on-accent: var(--on-accent);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
+  --font-sans: var(--font-jakarta), "Noto Sans Devanagari", ui-sans-serif, system-ui, sans-serif;
+  --radius-control: 8px;
+  --radius-card: 10px;
+}
+
+html { background: var(--bg); }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { letter-spacing: -0.02em; line-height: 1.2; font-weight: 700; }
+
+/* Visible keyboard focus everywhere */
+:focus-visible { outline: 2px solid var(--accent-text); outline-offset: 2px; border-radius: var(--radius-control); }
+
+/* Skeleton loader (static pulse only when motion is allowed) */
+.skeleton { background: var(--surface-2); border-radius: var(--radius-control); }
+@media (prefers-reduced-motion: no-preference) {
+  .skeleton { animation: skeleton-pulse 1.4s ease-in-out infinite; }
+  @keyframes skeleton-pulse { 50% { opacity: 0.55; } }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+/* Shared component classes (kept small; compose Tailwind utilities for layout) */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 40px; padding: 0 1rem; border-radius: var(--radius-control); border: 1px solid transparent; font-weight: 600; font-size: 0.9375rem; cursor: pointer; transition: background-color 120ms, border-color 120ms; }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.btn-primary { background: var(--accent); color: var(--on-accent); }
+.btn-primary:hover:not(:disabled) { background: var(--accent-hover); }
+.btn-secondary { background: var(--surface); color: var(--text); border-color: var(--border); }
+.btn-secondary:hover:not(:disabled) { background: var(--surface-2); }
+.btn-ghost { background: transparent; color: var(--text); }
+.btn-ghost:hover:not(:disabled) { background: var(--surface-2); }
+.input { width: 100%; min-height: 40px; padding: 0 0.75rem; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: var(--radius-control); font: inherit; }
+.input::placeholder { color: var(--muted); }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-card); }
+.chip { display: inline-flex; align-items: center; min-height: 24px; padding: 0 0.5rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.8125rem; color: var(--muted); background: var(--surface); }
+.chip-accent { background: var(--accent-soft); color: var(--accent-text); border-color: transparent; font-weight: 600; }
