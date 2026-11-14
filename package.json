@@ -1,0 +1,45 @@
+{
+  "name": "aivoke",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "db:seed:generate": "node scripts/generate-seed.mjs scripts/source/index.html > supabase/seed.sql",
+    "test:seed": "node scripts/verify-seed.mjs",
+    "test": "node --test --experimental-strip-types tests/validation.test.mjs",
+    "check": "npm run test:seed && npm test && npm run typecheck && npm run lint && npm run build"
+  },
+  "dependencies": {
+    "@google/genai": "^1.30.0",
+    "@supabase/ssr": "^0.7.0",
+    "@supabase/supabase-js": "^2.80.0",
+    "@upstash/ratelimit": "^2.0.6",
+    "@upstash/redis": "^1.35.6",
+    "framer-motion": "^12.23.24",
+    "next": "^16.0.1",
+    "next-themes": "^0.4.6",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "resend": "^6.4.2",
+    "server-only": "^0.0.1",
+    "sharp": "^0.34.5",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.17",
+    "@types/node": "^22.19.1",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "eslint": "^9.39.1",
+    "eslint-config-next": "^16.0.1",
+    "tailwindcss": "^4.1.17",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}
