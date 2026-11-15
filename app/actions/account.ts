@@ -32,7 +32,11 @@ async function persistProfile(input: unknown, finish: boolean): Promise<ActionRe
   const parsed = profileSchema.safeParse(input);
   const fieldErrors: Record<string, string> = {};
   if (!parsed.success) {
-    for (const i of parsed.error.issues) fieldErrors[String(i.path[0] ?? "form") + (i.path[1] !== undefined ? `.${i.path[1]}.${String(i.path[2] ?? "")}` : "")] ??= i.message;
+    for (const i of parsed.error.issues) {
+      // zod 4 paths are PropertyKey[] (may include symbols), so every segment goes through String().
+      const key = String(i.path[0] ?? "form") + (i.path[1] !== undefined ? `.${String(i.path[1])}.${String(i.path[2] ?? "")}` : "");
+      fieldErrors[key] ??= i.message;
+    }
     return { ok: false, fieldErrors };
   }
   const v = parsed.data;
