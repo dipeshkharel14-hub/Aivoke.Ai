@@ -7,7 +7,6 @@ export const SITE_DESCRIPTION =
 
 /** The only public email on the site. Read on the server and pass down; never hardcode it elsewhere. */
 export function supportEmail(): string {
-  const v = process.env.SUPPORT_EMAIL;
-  if (!v) throw new Error("SUPPORT_EMAIL is not set");
-  return v;
+  // Falls back to the documented address so a missing variable can never fail the whole build/prerender.
+  return process.env.SUPPORT_EMAIL || "info@khareldipesh.com.np";
 }
