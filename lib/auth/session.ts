@@ -35,12 +35,18 @@ export async function getMe(): Promise<Me | null> {
     supabase.rpc("my_account").single(),
   ]);
   if (pub.error || acct.error || !pub.data || !acct.data) return null;
-  const a = acct.data as Record<string, any>;
+  const a = acct.data as Pick<Me, "role" | "onboarded_at" | "show_on_leaderboard" | "featured_opt_in" | "notify_product" | "notify_social" | "is_banned">;
+  const pr = pub.data as Pick<Me, "username" | "display_name" | "avatar_url" | "bio" | "country" | "is_public"> & { links: unknown };
   return {
     id: user.id,
     email: user.email ?? null,
-    ...(pub.data as any),
-    links: Array.isArray((pub.data as any).links) ? (pub.data as any).links : [],
+    username: pr.username,
+    display_name: pr.display_name,
+    avatar_url: pr.avatar_url,
+    bio: pr.bio,
+    country: pr.country,
+    is_public: pr.is_public,
+    links: Array.isArray(pr.links) ? (pr.links as LinkItem[]) : [],
     role: a.role,
     onboarded_at: a.onboarded_at,
     show_on_leaderboard: a.show_on_leaderboard,
